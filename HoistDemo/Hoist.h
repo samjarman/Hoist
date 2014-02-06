@@ -10,11 +10,11 @@
 
 @interface Hoist : NSObject
 
++ (Hoist *)shared;
     
     
--(id)initWithAppKey:(NSString *)appKey;
-    
-    
+-(void)setAppKey:(NSString *)appKey;
+
 //Auth Methods.
 -(void)signUpWithDetails:(NSDictionary *)details andCallback:(void (^)(id response))callback;
 -(void)loginWithDetails:(NSDictionary *)details andCallback:(void (^)(id response))callback;

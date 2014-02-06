@@ -18,10 +18,23 @@
     
 #pragma mark -
 #pragma mark Initilization
--(id)initWithAppKey:(NSString *)appKey{
-    Hoist *h = [[Hoist alloc] init];
-    h.appKey = appKey;
-    return h;
+    
++ (Hoist *)shared
+    {
+        static Hoist *_sharedSession = nil;
+        static dispatch_once_t onceSessionPredicate;
+        
+        dispatch_once(&onceSessionPredicate, ^{
+            
+            _sharedSession = [[self alloc] init];
+        });
+        
+        return _sharedSession;
+    }
+    
+    
+-(void)setAppKey:(NSString *)appKey{
+    self.appKey = appKey;
 }
     
 #pragma mark -
