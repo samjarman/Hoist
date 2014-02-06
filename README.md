@@ -1,7 +1,7 @@
 Hoist
 =====
 
-Hoist client library for iOS. Allows for interactions for all API from [Hoist](http://www.hoistapps.com).
+Hoist client library for iOS. Allows for interactions for all API from [Hoist](http://www.hoistapps.com). It relies on the amazing [AFNetworking](https://github.com/AFNetworking/AFNetworking)
 <hr>
 
 ####To set up:
