@@ -10,25 +10,26 @@
 #import "Hoist.h"
 @interface HDViewController ()
 @end
-#define API_KEY @"YOUR KEY HERE"
+#define API_KEY @""
 
 @implementation HDViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [[Hoist shared] setAppKey:API_KEY];
-    [self createUser];
+    [[Hoist shared] setUpAppKey:API_KEY];
+    //[self createUser];
+    [self saveData];
 }
     
 -(void) createUser{
-    [[Hoist shared] signUpWithDetails:@{@"email": @"fake@fakename.com", @"password":@"123456"} andCallback:^(id response) {
+    [[Hoist shared] signUpWithDetails:@{@"email": @"fake+1@fakename.com", @"password":@"123456"} withCallback:^(id response) {
         [self login];
     }];
     
 }
 -(void) login {
-    [[Hoist shared] loginWithDetails:@{@"email": @"fake@fakename.com", @"password":@"123456"} andCallback:^(id response) {
+    [[Hoist shared] loginWithDetails:@{@"email": @"fake+1@fakename.com", @"password":@"123456"} withCallback:^(id response) {
         [self logout];
     }];
     
@@ -38,9 +39,27 @@
     
 }
     
+-(void) saveData {
+    [[Hoist shared] updateEntityWithType:@"test" andId:nil andData:@{@"name": @"The Doctor", @"generation": @"11th"} withCallback:^(id response) {
+        //Update your internal model here of the data. Store the ID on the object.
+        [self getDataWithID:[response[0] objectForKey:@"_id"]];
+    }];
+}
+
+-(void) getDataWithID:(NSString *)ID {
     
-    
-    
+    [[Hoist shared] retrieveEntityWithType:@"test" andId:ID withCallback:nil];
+    [self getCollection];
+    [self deleteEntity:ID];
+}
+
+-(void)getCollection{
+    [[Hoist shared] retrieveCollectionWithType:@"test" withCallback:nil];
+}
+-(void)deleteEntity:(NSString *)id{
+    [[Hoist shared] deleteEntityWithType:@"test" andId:id withCallback:nil];
+}
+
     
 
 - (void)didReceiveMemoryWarning
