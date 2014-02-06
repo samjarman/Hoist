@@ -23,6 +23,7 @@
 		8A1E770218A2E1B600DE84F2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8A1E770018A2E1B600DE84F2 /* InfoPlist.strings */; };
 		8A1E770418A2E1B600DE84F2 /* HoistDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A1E770318A2E1B600DE84F2 /* HoistDemoTests.m */; };
 		8A2B329718A2E46600C50AA8 /* Hoist.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A2B329618A2E46600C50AA8 /* Hoist.m */; };
+		8A79D4EA18A354530007BB95 /* dw.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A79D4E918A354530007BB95 /* dw.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 		8A1E770318A2E1B600DE84F2 /* HoistDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HoistDemoTests.m; sourceTree = "<group>"; };
 		8A2B329518A2E46600C50AA8 /* Hoist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Hoist.h; path = HoistDemo/Hoist.h; sourceTree = "<group>"; };
 		8A2B329618A2E46600C50AA8 /* Hoist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Hoist.m; path = HoistDemo/Hoist.m; sourceTree = "<group>"; };
+		8A79D4E918A354530007BB95 /* dw.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dw.png; sourceTree = "<group>"; };
 		9CC28315C09947A08414F87D /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		DEBF083EBC18485BBE7F92D7 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -128,6 +130,7 @@
 				8A1E76E718A2E1B600DE84F2 /* Main_iPhone.storyboard */,
 				8A1E76ED18A2E1B600DE84F2 /* HDViewController.h */,
 				8A1E76EE18A2E1B600DE84F2 /* HDViewController.m */,
+				8A79D4E918A354530007BB95 /* dw.png */,
 				8A1E76F018A2E1B600DE84F2 /* Images.xcassets */,
 				8A1E76DC18A2E1B600DE84F2 /* Supporting Files */,
 			);
@@ -244,6 +247,7 @@
 			files = (
 				8A1E76F118A2E1B600DE84F2 /* Images.xcassets in Resources */,
 				8A1E76E918A2E1B600DE84F2 /* Main_iPhone.storyboard in Resources */,
+				8A79D4EA18A354530007BB95 /* dw.png in Resources */,
 				8A1E76E018A2E1B600DE84F2 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

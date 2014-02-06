@@ -82,10 +82,31 @@
 -(void)deleteEntityWithType:(NSString *)type andId:(NSString *)ID withCallback:(void (^)(id response))callback;
 
 #pragma mark - Notify
--(void)sendNotifcationWithTemplateName:(NSString *)templateName withCallback:(void (^)(id response))callback;
-    
+/**
+ *  Sends a notification
+ *
+ *  @param templateName The template name of the notification
+ *  @param body         Body lining up with the data names used in the template
+ *  @param callback     A block that will be called when the server returns
+ */
+-(void)sendNotifcationWithTemplateName:(NSString *)templateName andBody:(NSDictionary *)body withCallback:(void (^)(id response))callback;
+
 #pragma mark - Files
--(void)saveFileWithPath:(NSString *)filePath andKey:(NSString *)key withCallback:(void (^)(id response))callback;
+/**
+ *  Stores a file on Hoist.
+ *
+ *  @param key      The key for the file.
+ *  @param data     A NSData instance.
+ *  @param callback A block that will be called when the server returns
+ */
+-(void)saveFileWithKey:(NSString *)key andData:(NSData *)data withCallback:(void (^)(id response))callback;
+
+/**
+ *  Retrieves a file. Should be castable into NSData and then up to you to decode.
+ *
+ *  @param key      The key for the file
+ *  @param callback A block that will be called when the server returns
+ */
 -(void)retrieveFileWithKey:(NSString *)key withCallback:(void (^)(id response))callback;
 
     

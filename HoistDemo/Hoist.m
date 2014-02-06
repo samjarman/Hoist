@@ -16,7 +16,7 @@
 #define AUTH_URL @"https://auth.hoi.io"
 #define DATA_URL @"https://data.hoi.io"
 #define NOTIFY_URL @"https://notify.hoi.io"
-#define FILES_URL @"https://files.hoi.io"
+#define FILES_URL @"https://file.hoi.io"
 
 @implementation Hoist
     
@@ -40,7 +40,7 @@
     [self.manager setRequestSerializer:[AFJSONRequestSerializer serializer]];
     [self.manager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
     [self.manager.requestSerializer setValue:[NSString stringWithFormat:@"Hoist %@", self.appKey] forHTTPHeaderField:@"Authorization"];
-    self.manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/plain", @"application/json", nil];
+    self.manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/plain", @"application/json", @"application/octet-stream", @"image/png", nil];
     
 }
     
@@ -182,11 +182,56 @@
 }
 
 #pragma mark - Notify
--(void)sendNotifcationWithTemplateName:(NSString *)templateName withCallback:(void (^)(id response))callback{}
+-(void)sendNotifcationWithTemplateName:(NSString *)templateName andBody:(NSDictionary *)body withCallback:(void (^)(id response))callback{
+    
+    [self.manager POST:[NSString stringWithFormat:@"%@/%@/%@", NOTIFY_URL, @"notification", templateName] parameters:body success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"Notification sent successful: %@", [responseObject description]);
+        if (callback) {
+            callback(responseObject);
+        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Notification failed: %@", [error description]);
+        if (callback) {
+            callback(error);
+        }
+    }];
+}
 
 #pragma mark - Files
--(void)saveFileWithPath:(NSString *)filePath andKey:(NSString *)key withCallback:(void (^)(id response))callback{}
--(void)retrieveFileWithKey:(NSString *)key withCallback:(void (^)(id response))callback{}
+-(void)saveFileWithKey:(NSString *)key andData:(NSData *)data withCallback:(void (^)(id response))callback{
+    [self.manager POST:[NSString stringWithFormat:@"%@/%@", FILES_URL, key] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+       // [formData appendPartWithFormData:data name:@"file"];
+        [formData appendPartWithFileData:data name:@"file" fileName:key mimeType:@"application/octet-stream"];
+    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+        NSLog(@"File saved successful: %@", [responseObject description]);
+        if (callback) {
+            callback(responseObject);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"File save failed: %@", [error description]);
+        if (callback) {
+            callback(error);
+        }
+    }];
+    
+}
+-(void)retrieveFileWithKey:(NSString *)key withCallback:(void (^)(id response))callback{
+    
+    [self.manager GET:[NSString stringWithFormat:@"%@/%@", FILES_URL, key] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"File retrieved successful: %@", [responseObject description]);
+        if (callback) {
+            callback(responseObject);
+        }
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"File retrieve failed: %@", [error description]);
+        if (callback) {
+            callback(error);
+        }
+    }];
+
+}
 
 
     
