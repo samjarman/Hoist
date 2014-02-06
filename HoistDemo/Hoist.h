@@ -103,7 +103,7 @@
 
 /**
  *  Retrieves a file. Should be castable into NSData and then up to you to decode.
- *
+ *  Note: only certain MIME types are accepted for now. Kinda odd. I'm looking into it.
  *  @param key      The key for the file
  *  @param callback A block that will be called when the server returns
  */
