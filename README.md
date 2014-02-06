@@ -1,7 +1,7 @@
 Hoist
 =====
 
-Hoist client library for iOS. Allows for interactions for all API from [Hoist](www.hoistapps.com).
+Hoist client library for iOS. Allows for interactions for all API from [Hoist](http://www.hoistapps.com).
 <hr>
 
 ####To set up:
@@ -44,3 +44,6 @@ Files can be sent and retrieved from Hoist.
 <hr>   
 For more doucmentation, see `Hoist.h`. Happy to hear about any issues and/or pull requests.
 
+
+###Cocoapods though? 
+Soon! Want to fix everything first. 
