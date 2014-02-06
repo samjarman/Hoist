@@ -9,6 +9,7 @@
 #import "Hoist.h"
 #import <AFNetworking/AFNetworking.h>
 @interface Hoist ()
+    @property (nonatomic, strong) AFHTTPRequestOperationManager *manager;
     @property (nonatomic, strong) NSString *appKey;
 @end
 
@@ -28,26 +29,31 @@
             
             _sharedSession = [[self alloc] init];
         });
-        
+
         return _sharedSession;
     }
+-(void) setUpOpManager{
+    self.manager = [AFHTTPRequestOperationManager manager];
+    [self.manager setRequestSerializer:[AFHTTPRequestSerializer serializer]];
+    [self.manager.requestSerializer setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    [self.manager.requestSerializer setValue:[NSString stringWithFormat:@"Hoist %@", self.appKey] forHTTPHeaderField:@"Authorization"];
+    self.manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/plain", @"application/json", nil];
     
+}
     
 -(void)setAppKey:(NSString *)appKey{
     self.appKey = appKey;
+    [self setUpOpManager];
 }
+    
+
     
 #pragma mark -
 #pragma mark Membership
     
 -(void)signUpWithDetails:(NSDictionary *)details andCallback:(void (^)(id response))callback{
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager setRequestSerializer:[AFHTTPRequestSerializer serializer]];
-    [manager.requestSerializer setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-    [manager.requestSerializer setValue:[NSString stringWithFormat:@"Hoist %@", self.appKey] forHTTPHeaderField:@"Authorization"];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/plain", @"application/json", nil];
     
-    [manager POST:[NSString stringWithFormat:@"%@%@", AUTH_URL, @"user"] parameters:details success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self.manager POST:[NSString stringWithFormat:@"%@%@", AUTH_URL, @"user"] parameters:details success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"User Created: %@", [responseObject description]);
         if (callback) {
             callback(responseObject);
@@ -62,13 +68,8 @@
 }
 
 -(void)loginWithDetails:(NSDictionary *)details andCallback:(void (^)(id response))callback{
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager setRequestSerializer:[AFHTTPRequestSerializer serializer]];
-    [manager.requestSerializer setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-    [manager.requestSerializer setValue:[NSString stringWithFormat:@"Hoist %@", self.appKey] forHTTPHeaderField:@"Authorization"];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/plain", @"application/json", nil];
     
-    [manager POST:[NSString stringWithFormat:@"%@%@", AUTH_URL, @"login"] parameters:details success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self.manager POST:[NSString stringWithFormat:@"%@%@", AUTH_URL, @"login"] parameters:details success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"User Logged in: %@", [responseObject description]);
         if (callback) {
             callback(responseObject);
@@ -86,14 +87,9 @@
 
     
 -(void)logoutWithCallback:(void (^)(id response))callback{
+ 
     
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager setRequestSerializer:[AFHTTPRequestSerializer serializer]];
-    [manager.requestSerializer setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-    [manager.requestSerializer setValue:[NSString stringWithFormat:@"Hoist %@", self.appKey] forHTTPHeaderField:@"Authorization"];
-    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/plain", @"application/json", nil];
-    
-    [manager POST:[NSString stringWithFormat:@"%@%@", AUTH_URL, @"logout"] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self.manager POST:[NSString stringWithFormat:@"%@%@", AUTH_URL, @"logout"] parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"User logged out: %@", [responseObject description]);
         if (callback) {
             callback(responseObject);
