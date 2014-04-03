@@ -5,7 +5,7 @@ Hoist client library for iOS. Allows for interactions for all API from [Hoist](h
 <hr>
 
 ####To set up:
-*  Drag `Hoist.h` and `Hoist.n` into your project.
+*  Drag `Hoist.h` and `Hoist.m` into your project.
 *  Include `Hoist.h`
 *  Start an instance by calling `[Hoist shared] setUpAppKey:@"Your app key here"];` ** This is important! ** 
 
